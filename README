@@ -6,6 +6,7 @@ SYNOPSIS
       use MojoX::AIO;
       use Fcntl qw( O_RDONLY );
 
+      # use normal IO::AIO methods
       aio_open( '/etc/passwd', O_RDONLY, 0, sub {
           my $fh = shift;
           my $buffer = '';
@@ -25,14 +26,14 @@ NOTES
     This module automaticly bootstraps itself on use.
 
 SEE ALSO
-    IO::AIO, Mojolicious
+    IO::AIO, Mojolicious (<http://mojolicio.us/>)
 
 AUTHOR
-    David Davis <xantus@cpan.org> <http://xant.us/>
+    David Davis <xantus@cpan.org>, <http://xant.us/>
 
 LICENSE
     Artistic License
 
-COPYRIGHT AND LICENSE
+COPYRIGHT
     Copyright (c) 2010 David Davis, All rights reserved
 

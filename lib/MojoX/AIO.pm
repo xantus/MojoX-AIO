@@ -8,7 +8,7 @@ use strict;
 use warnings;
 use Carp qw( croak );
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 use vars qw( $singleton );
 
@@ -38,31 +38,24 @@ sub new {
     my $class = shift;
     return $singleton if ( $singleton );
 
-    my $self = $singleton = bless({
-        @_
-    }, ref $class || $class );
+    my $self = $singleton = bless({ @_ }, ref $class || $class );
 
     my $fd = poll_fileno();
-    open( my $fh, "<&=$fd" ) or die "Can't open IO::AIO poll_fileno - $fd : $!";
+    open( my $fh, "<&=$fd" ) or croak "Can't open IO::AIO poll_fileno - $fd : $!";
 
-    my $id = $self->{_id} = "$fh";
-
-    Mojo::IOLoop->singleton->{_fds}->{ $fd } = $id;
-    Mojo::IOLoop->singleton->{_cs}->{ $id } = {
-        socket => $fh
-    };
-    Mojo::IOLoop->singleton->on_read( $id, \&poll_cb );
-    Mojo::IOLoop->singleton->on_error( $id, sub {
-        # XXX
-        warn "MojoX::AIO error! @_\n";
-    });
-    Mojo::IOLoop->singleton->_not_writing( $id );
+    Mojo::IOLoop->singleton->connect(
+        socket => $fh,
+        on_read => \&poll_cb,
+        on_error => sub {
+            warn "MojoX::AIO error! @_";
+        }
+    );
 
     return $self;
 }
 
 sub singleton() {
-    $singleton;
+    return $singleton;
 }
 
 1;
@@ -79,6 +72,7 @@ MojoX::AIO - Asynchronous File I/O for Mojolicious
   use MojoX::AIO;
   use Fcntl qw( O_RDONLY );
 
+  # use normal IO::AIO methods
   aio_open( '/etc/passwd', O_RDONLY, 0, sub {
       my $fh = shift;
       my $buffer = '';
@@ -101,18 +95,17 @@ This module automaticly bootstraps itself on use.
 
 =head1 SEE ALSO
 
-L<IO::AIO>, L<Mojolicious>
+L<IO::AIO>, L<Mojolicious> (L<http://mojolicio.us/>)
 
 =head1 AUTHOR
 
-David Davis <xantus@cpan.org>
-L<http://xant.us/>
+David Davis <xantus@cpan.org>, L<http://xant.us/>
 
 =head1 LICENSE
 
 Artistic License
 
-=head1 COPYRIGHT AND LICENSE
+=head1 COPYRIGHT
 
 Copyright (c) 2010 David Davis, All rights reserved
 

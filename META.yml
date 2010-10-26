@@ -1,6 +1,6 @@
 # http://module-build.sourceforge.net/META-spec.html
 name:         MojoX-AIO
-version:      0.01
+version:      0.02
 version_from: lib/MojoX/AIO.pm
 installdirs:  site
 requires:

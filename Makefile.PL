@@ -7,8 +7,8 @@ WriteMakefile(
     'VERSION_FROM'    => 'lib/MojoX/AIO.pm', # finds $VERSION
     'PREREQ_PM'        => {
         'Carp'        => undef,
-        'IO::AIO'     => undef,
-        'Mojolicious' => undef,
+        'IO::AIO'     => 2,
+        'Mojolicious' => 0.999931,
     },
     'dist'         => {
         'SUFFIX'       => ".gz",
