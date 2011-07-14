@@ -6,9 +6,10 @@ use IO::AIO qw( poll_fileno poll_cb );
 
 use strict;
 use warnings;
+
 use Carp qw( croak );
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 use vars qw( $singleton );
 
@@ -44,7 +45,7 @@ sub new {
     open( my $fh, "<&=$fd" ) or croak "Can't open IO::AIO poll_fileno - $fd : $!";
 
     Mojo::IOLoop->singleton->connect(
-        socket => $fh,
+        handle => $fh,
         on_read => \&poll_cb,
         on_error => sub {
             warn "MojoX::AIO error! @_";

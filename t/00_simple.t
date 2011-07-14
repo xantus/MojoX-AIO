@@ -1,22 +1,23 @@
 #!/usr/bin/perl
 
 # vim: set syntax=perl
-use warnings;
-use strict;
 
 use Test::More tests => 6;
 
 BEGIN {
-    use_ok 'Mojolicious';
+    use_ok 'Mojo';
     use_ok 'IO::AIO';
     use_ok 'MojoX::AIO';
 }
 
 use Fcntl qw( O_RDONLY );
 use FindBin;
+use Mojo::IOLoop;
 
 use strict;
 use warnings;
+
+my $loop = Mojo::IOLoop->singleton;
 
 sub _start {
     my $file = $FindBin::Bin.'/../Makefile.PL';
@@ -49,11 +50,11 @@ sub read_done {
 
     Test::More::pass("read file: $bytes bytes");
 
-    Mojo::IOLoop->singleton->stop;
+    $loop->stop;
 }
 
-Mojo::IOLoop->singleton->timer( 1 => \&_start );
+$loop->timer( 1 => \&_start );
 
-Mojo::IOLoop->singleton->start;
+$loop->start;
 
 1;
