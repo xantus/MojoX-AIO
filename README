@@ -23,7 +23,9 @@ DESCRIPTION
      This component adds support for L<IO::AIO> use with L<Mojolicious>
 
 NOTES
-    This module automaticly bootstraps itself on use.
+    This module automaticly bootstraps itself on use. To disable this, use:
+
+      use MojoX::AIO { no_auto_bootstrap => 1 };
 
 SEE ALSO
     IO::AIO, Mojolicious (<http://mojolicio.us/>)
@@ -35,5 +37,5 @@ LICENSE
     Artistic License
 
 COPYRIGHT
-    Copyright (c) 2010 David Davis, All rights reserved
+    Copyright (c) 2010-2011 David Davis, All rights reserved
 

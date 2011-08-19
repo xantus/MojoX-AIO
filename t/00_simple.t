@@ -13,6 +13,7 @@ BEGIN {
 use Fcntl qw( O_RDONLY );
 use FindBin;
 use Mojo::IOLoop;
+use bytes;
 
 use strict;
 use warnings;
@@ -31,7 +32,7 @@ sub open_done {
 
     unless ( defined $fh ) {
         Test::More::fail("aio open failed on $file: $!");
-        return;
+        return $loop->stop;
     }
 
     Test::More::pass("opened $file, going to read");
@@ -45,7 +46,12 @@ sub read_done {
 
     unless( $bytes > 0 ) {
         Test::More::fail("aio read failed: $!");
-        return;
+        return $loop->stop;
+    }
+
+    unless ( length $buffer == $bytes ) {
+        Test::More::fail("buffer doesn't match byte count");
+        return $loop->stop;
     }
 
     Test::More::pass("read file: $bytes bytes");
@@ -54,6 +60,7 @@ sub read_done {
 }
 
 $loop->timer( 1 => \&_start );
+$loop->timer( 10 => sub { Test::More::fail("test timed out after 10s"); $loop->stop; });
 
 $loop->start;
 

@@ -1,15 +1,17 @@
 package MojoX::AIO;
 
-use Mojo::IOLoop;
-
-use IO::AIO qw( poll_fileno poll_cb );
-
 use strict;
 use warnings;
 
+use Mojo::Base -base;
+
+use Mojo::IOLoop;
+use IO::AIO qw( poll_fileno poll_cb );
 use Carp qw( croak );
 
-our $VERSION = '0.03';
+has 'ioloop' => sub { Mojo::IOLoop->singleton };
+
+our $VERSION = '0.04';
 
 use vars qw( $singleton );
 
@@ -30,7 +32,7 @@ sub import {
     return if ( $args->{no_auto_bootstrap} );
 
     # bootstrap
-    MojoX::AIO->new( %$args );
+    $class->new( %$args );
 
     return;
 }
@@ -44,12 +46,9 @@ sub new {
     my $fd = poll_fileno();
     open( my $fh, "<&=$fd" ) or croak "Can't open IO::AIO poll_fileno - $fd : $!";
 
-    Mojo::IOLoop->singleton->connect(
-        handle => $fh,
-        on_read => \&poll_cb,
-        on_error => sub {
-            warn "MojoX::AIO error! @_";
-        }
+    $self->ioloop->iowatcher->add(
+        $fh,
+        on_readable => \&poll_cb
     );
 
     return $self;
@@ -92,7 +91,9 @@ MojoX::AIO - Asynchronous File I/O for Mojolicious
 
 =head1 NOTES
 
-This module automaticly bootstraps itself on use.
+This module automaticly bootstraps itself on use.  To disable this, use:
+
+  use MojoX::AIO { no_auto_bootstrap => 1 };
 
 =head1 SEE ALSO
 
@@ -108,5 +109,5 @@ Artistic License
 
 =head1 COPYRIGHT
 
-Copyright (c) 2010 David Davis, All rights reserved
+Copyright (c) 2010-2011 David Davis, All rights reserved
 
