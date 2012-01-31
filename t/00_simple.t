@@ -5,14 +5,13 @@
 use Test::More tests => 6;
 
 BEGIN {
-    use_ok 'Mojo';
+    use_ok 'Mojo::IOLoop';
     use_ok 'IO::AIO';
     use_ok 'MojoX::AIO';
 }
 
 use Fcntl qw( O_RDONLY );
 use FindBin;
-use Mojo::IOLoop;
 use bytes;
 
 use strict;
