@@ -28,10 +28,10 @@ NOTES
       use MojoX::AIO { no_auto_bootstrap => 1 };
 
 SEE ALSO
-    IO::AIO, Mojolicious (<http://mojolicio.us/>)
+    IO::AIO, Mojolicious ("/mojolicio.us/ " in http:)
 
 AUTHOR
-    David Davis <xantus@cpan.org>, <http://xant.us/>
+    David Davis <xantus@cpan.org>, "/xant.us/ " in http:
 
 CONTRIBUTORS
     Olivier Duclos
