@@ -101,7 +101,7 @@ L<IO::AIO>, L<Mojolicious> (L<http://mojolicio.us/>)
 
 =head1 AUTHOR
 
-David Davis <xantus@cpan.org>, L<http://xant.us/>
+David Davis <xantus@cpan.org>, L<http://xantus.org/>
 
 =head1 CONTRIBUTORS
 
