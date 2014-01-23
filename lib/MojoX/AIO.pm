@@ -97,11 +97,11 @@ This module automaticly bootstraps itself on use.  To disable this, use:
 
 =head1 SEE ALSO
 
-L<IO::AIO>, L<Mojolicious> (L< http://mojolicio.us/ >)
+L<IO::AIO>, L<Mojolicious> (L<http://mojolicio.us/ >)
 
 =head1 AUTHOR
 
-David Davis <xantus@cpan.org>, L< http://xant.us/ >
+David Davis <xantus@cpan.org>, L<http://xant.us/ >
 
 =head1 CONTRIBUTORS
 
