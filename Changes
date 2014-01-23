@@ -1,6 +1,9 @@
 
 Revision history for Perl extension MojoX::AIO
 
+0.06 Thu, Jan 23 2014
+    contribution from Olivier Duclos to work with recent mojolicious
+
 0.05 Mon, Jan 30 2011 20:57:00 PST
     updated to work with newer versions of Mojolicious
     with backward compat for previous versions
